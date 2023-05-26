@@ -1,0 +1,8 @@
+$shutdownTime = Get-Date "2023-05-17 12:50"  # Replace with your desired shutdown time
+$currentTime = Get-Date
+
+if ($shutdownTime -gt $currentTime) {
+    $timeSpan = New-TimeSpan -Start $currentTime -End $shutdownTime
+    Start-Sleep -Seconds $timeSpan.TotalSeconds
+    Stop-Computer -Force
+}
