@@ -1,2 +1,2 @@
-# Scripting powershell
-Scripting
+Scripting in powershell
+Thanks for watching!!!
