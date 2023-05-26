@@ -1,0 +1,11 @@
+# Set the partition path
+$partitionPath = "D:\"  # Replace with your desired partition path
+
+# Get the folders in the partition
+$folders = Get-ChildItem -Path $partitionPath -Directory
+
+# Extract the folder names
+$folderNames = $folders | Select-Object -ExpandProperty Name
+
+# Display the folder names
+$folderNames
