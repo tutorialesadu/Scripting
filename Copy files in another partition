@@ -1,0 +1,22 @@
+$sourceDir = "C:\Users\admin\Desktop\folder"
+$destinationDir = "D:\backup"
+
+# Get the current date and format it to match the file name pattern
+$date = Get-Date -Format "yyyy-MM-dd"
+
+# Generate the destination directory path for the current month
+$destinationMonthDir = Join-Path -Path $destinationDir -ChildPath $date
+
+# Check if the destination directory for the current month already exists; if not, create it
+if (-not (Test-Path $destinationMonthDir -PathType Container)) {
+    New-Item -Path $destinationMonthDir -ItemType Directory | Out-Null
+}
+
+# Get the list of files to be copied
+$filesToCopy = Get-ChildItem -Path $sourceDir | Where-Object { -not $_.PSIsContainer }
+
+# Copy each file to the destination partition
+foreach ($file in $filesToCopy) {
+    $destinationPath = Join-Path -Path $destinationMonthDir -ChildPath $file.Name
+    Copy-Item -Path $file.FullName -Destination $destinationPath
+}
