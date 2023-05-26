@@ -1,0 +1,24 @@
+# Set the source folders where the PDF files are located
+$sourceFolders = @(
+    "C:\Users\admin\Desktop\1",  #numele folderului de unde vreau sa copiez
+    "C:\Users\admin\Desktop\2"
+    
+)
+
+# Set the destination folder where the PDF files will be copied
+$destinationFolder = "C:\Users\admin\Desktop\aici" #numele folderului unde vreau sa copiez
+
+# Loop through each source folder
+foreach ($folder in $sourceFolders) {
+    # Get all PDF files in the current source folder
+    $pdfFiles = Get-ChildItem -Path $folder -Filter "*.pdf" -File -Recurse
+
+    # Copy each PDF file to the destination folder
+    foreach ($file in $pdfFiles) {
+        $destinationPath = Join-Path -Path $destinationFolder -ChildPath $file.Name
+        Copy-Item -Path $file.FullName -Destination $destinationPath
+    }
+}
+
+# Display a completion message
+Write-Host "PDF files copied to $destinationFolder."
