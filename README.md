@@ -1,2 +1,2 @@
-# Scripting
+# Scripting powershell
 Scripting
