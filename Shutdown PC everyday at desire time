@@ -1,0 +1,24 @@
+# Get the current time
+$currentTime = Get-Date
+
+# Set the desired shutdown time (adjust the hour and minute as per your requirements)
+$shutdownTime = Get-Date -Hour 17 -Minute 20 -Second 0
+
+# Calculate the time difference between current time and shutdown time
+$timeSpan = New-TimeSpan -Start $currentTime -End $shutdownTime
+
+# If the shutdown time has already passed for today, add one day to the shutdown time
+if ($timeSpan.TotalSeconds -lt 0) {
+    $shutdownTime = $shutdownTime.AddDays(1)
+}
+
+# Calculate the time interval until the next shutdown time
+$shutdownInterval = New-TimeSpan -Start $currentTime -End $shutdownTime
+
+# Start a new scheduled task to execute the shutdown command at the desired time
+$trigger = New-ScheduledTaskTrigger -Once -At $shutdownTime
+$action = New-ScheduledTaskAction -Execute 'shutdown' -Argument '/s /f /t 0'
+Register-ScheduledTask -TaskName "DailyShutdown" -Trigger $trigger -Action $action -RunLevel Highest
+
+# Display a confirmation message
+Write-Host "The PC will be shut down every day at $shutdownTime."
