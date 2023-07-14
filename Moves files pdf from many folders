@@ -1,12 +1,13 @@
 # Set the source folders where the PDF files are located
 $sourceFolders = @(
-    "C:\Users\admin\Desktop\1",  #numele folderului de unde vreau sa copiez
+    "C:\Users\admin\Desktop\1",  #numele folderului de unde vreau sa copiez (name of the folder where i want to move the files )
     "C:\Users\admin\Desktop\2"
     
 )
 
 # Set the destination folder where the PDF files will be copied
-$destinationFolder = "C:\Users\admin\Desktop\aici" #numele folderului unde vreau sa copiez
+$destinationFolder = "C:\Users\admin\Desktop\aici" #numele folderului unde vreau sa copiez (the name of the folder where i want to copy)
+
 
 # Loop through each source folder
 foreach ($folder in $sourceFolders) {
