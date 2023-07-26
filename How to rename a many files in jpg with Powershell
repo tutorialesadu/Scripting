@@ -1,0 +1,11 @@
+$files = Get-ChildItem -Path "C:\Users\admin\Desktop\here" -Filter "*.jpg"  # Get a list of files you want to rename
+
+$newNames = @("Photo1.jpg", "Photo2.jpg", "Photo3.jpg", "Photo4.jpg")  # Array of new names for the files
+
+for ($i = 0; $i -lt $files.Count; $i++) {
+    $newName = $newNames[$i]  # Get the new name from the array based on the index
+    Rename-Item -Path $files[$i].FullName -NewName $newName
+}
+
+
+#Photo1 -trebuie inlocuit cu numele dorit (must to replace with name desired)
