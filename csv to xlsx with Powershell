@@ -1,0 +1,29 @@
+# Set the paths for your CSV folder and Excel output folder
+$csvFolder = "C:\Users\admin\Desktop\csv_folder"
+$outputFolder = "C:\Users\admin\Desktop\xlsx_folder"
+
+# Load the Excel COM object
+$excel = New-Object -ComObject Excel.Application
+$excel.Visible = $false  # Set to $true if you want Excel to be visible
+
+# Loop through each CSV file in the folder
+foreach ($csvFile in (Get-ChildItem -Path $csvFolder -Filter *.csv)) {
+    $csvFilePath = $csvFile.FullName
+    $excelFilePath = Join-Path -Path $outputFolder -ChildPath ($csvFile.BaseName + ".xlsx")
+
+    # Open the CSV file in Excel
+    $workbook = $excel.Workbooks.Open($csvFilePath)
+
+    # Save the workbook as Excel format
+    $workbook.SaveAs($excelFilePath, [Microsoft.Office.Interop.Excel.XlFileFormat]::xlOpenXMLWorkbook)
+    
+    # Close and release resources
+    $workbook.Close($false)
+    [System.Runtime.Interopservices.Marshal]::ReleaseComObject($workbook) | Out-Null
+}
+
+# Close Excel and release resources
+$excel.Quit()
+[System.Runtime.Interopservices.Marshal]::ReleaseComObject($excel) | Out-Null
+
+Write-Host "Conversion complete."
